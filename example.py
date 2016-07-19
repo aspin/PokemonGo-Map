@@ -25,12 +25,13 @@ from datetime import datetime
 from geopy.geocoders import GoogleV3
 from gpsoauth import perform_master_login, perform_oauth
 from geopy.exc import GeocoderTimedOut, GeocoderServiceError
-from requests.packages.urllib3.exceptions import InsecureRequestWarning
+from requests.packages.urllib3.exceptions import InsecureRequestWarning, InsecurePlatformWarning
 from requests.adapters import ConnectionError
 from requests.models import InvalidURL
 from transform import *
 
 requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+requests.packages.urllib3.disable_warnings(InsecurePlatformWarning)
 
 API_URL = 'https://pgorelease.nianticlabs.com/plfe/rpc'
 LOGIN_URL = \
@@ -406,7 +407,7 @@ def get_heartbeat(service,
                            m4,
                            pokemon_pb2.RequestEnvelop.Requests(),
                            m5, )
-    if response is None:
+    if response is None or len(response.payload) is 0:
         return
     payload = response.payload[0]
     heartbeat = pokemon_pb2.ResponseEnvelop.HeartbeatPayload()
@@ -777,7 +778,7 @@ def config():
     center = {
         'lat': FLOAT_LAT,
         'lng': FLOAT_LONG,
-        'zoom': 15,
+        'zoom': 16,
         'identifier': "fullmap"
     }
     return json.dumps(center)
@@ -897,7 +898,7 @@ def get_map():
         lat=origin_lat,
         lng=origin_lon,
         markers=get_pokemarkers(),
-        zoom='15', )
+        zoom='16', )
     return fullmap
 
 

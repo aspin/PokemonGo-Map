@@ -7,7 +7,6 @@
             <title>Flask Google Maps Full Map Example</title>
     </head>
     <body>
-        <h1>Flask Google Maps Full Map Example</h1>
         <div id="fullmap" style='height:100%;width:100%;top:0;left:0;position:absolute;z-index:200;'>
             {{ fullmap.html }}
 
@@ -15,11 +14,8 @@
         
 
     </body>
-{{ fullmap.js }}
-<!-- Webdesign 101: scripts at the end make the page load faster -->
+  {{ fullmap.js }}
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ key }}"></script> -->
-
   <script type="text/javascript">
     var setLabelTime = function(){
         $('.label-countdown').each(function (index, element) {
@@ -168,10 +164,17 @@
                     if(markerCache[key] != null && markerCache[key].marker != null){
                         markerCache[key].marker.setMap(null);
                     }
+                    var icon = new google.maps.MarkerImage(
+                            item["icon"],
+                            null,
+                            null,
+                            null,
+                            new google.maps.Size(40, 40)
+                    );
                     var marker = addMarker({
                             position: new google.maps.LatLng(item["lat"], item["lng"]),
                             map: map,
-                            icon: item["icon"],
+                            icon: icon,
                         });
                     markerCache[key] = {item: item, marker: marker};
                     var disappearsAt;
