@@ -1,5 +1,5 @@
 #!/bin/zsh
 
 ./kill.sh
-./pe.sh &
-./kellog.sh &
+./pe.sh 8 &
+./kellog.sh 10 &
